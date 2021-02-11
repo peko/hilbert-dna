@@ -1,10 +1,14 @@
 # hilbert-dna
-DNA visualization based on hilbert curve
+DNA visualization based on hilbert curve.
+
+Potentialy can generate tiled map for huge datasets. There are no restrictions on the amount of data, because data is processed in small chunks.
+
+<a href="">Demo</a>
 
 DNA of Drosophila melanogaster ~167M nucleotides
 ------------------------------------------------
 
-<a href="https://www.ncbi.nlm.nih.gov/genome/47?genome_assembly_id=1508903">Part of genome of an fruit fly.</a> Image contains 67M nucleotides.
+<a href="https://www.ncbi.nlm.nih.gov/genome/47?genome_assembly_id=1508903">Data sourece</a> Image contains 67M nucleotides.
 
 - [A]denine - Red
 - [G]uanine - Green
