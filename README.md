@@ -21,7 +21,7 @@ The tool sequentially reads the specified files and draws standard 256x256px til
 DNA of Drosophila melanogaster ~167M nucleotides
 ------------------------------------------------
 
-<a href="https://www.ncbi.nlm.nih.gov/genome/47?genome_assembly_id=1508903">Data sourece</a> Image contains 67M nucleotides.
+<a href="https://www.ncbi.nlm.nih.gov/genome/47?genome_assembly_id=1508903">Data source</a> Image contains 67M nucleotides.
 
 - [A]denine - Red
 - [G]uanine - Green
