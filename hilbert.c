@@ -75,6 +75,8 @@ int main(int argc, char** argv){
         printf("Start %u\n",p);
 
         // Iterate through chunks
+        char code[]="---";
+        char mod = 0;
         while((s = fread(buf, 1,  BUF_SIZE, f)) > 0) {
             // x,y of pixel
             uint32_t x, y, tx, ty, px, py;
@@ -86,19 +88,36 @@ int main(int argc, char** argv){
             ty = y/256;
             sprintf(filename, "map/10-%u-%u.png", tx, ty);
             for(uint32_t i=0; i<BUF_SIZE; i++) {
+                code[2]=buf[i];
+                // printf("%s\n", code);
+                // start codon
+                printf("%.3s ", code);
+                if(strcmp("ATG",code)==0 || strcmp("GTG",code)==0 || strcmp("TTG",code)==0) {
+                    printf("START\n");
+                    mod = 0;
+                // end codon
+                } else if(strcmp("TAG",code)==0 || strcmp("TGA",code)==0 || strcmp("TAA",code)==0) {
+                    printf("STOP\n");
+                    mod = 1;
+                }
+                
                 d2xy(IMG_SIZE, p, &x, &y);
                 // pixel pos
                 px = x%256;
                 py = y%256;
+
                 uint32_t j = px+py*256;
                 byte n = i<s ? buf[i] : 0;
-                if     (n=='A') { png[j*3+0] = 0xD9; png[j*3+1] = 0x16; png[j*3+2] = 0x0C; }
-                else if(n=='G') { png[j*3+0] = 0xAF; png[j*3+1] = 0xCE; png[j*3+2] = 0x39; }
-                else if(n=='C') { png[j*3+0] = 0xF6; png[j*3+1] = 0x8C; png[j*3+2] = 0x13; }
-                else if(n=='T') { png[j*3+0] = 0x16; png[j*3+1] = 0x76; png[j*3+2] = 0xAE; }
-                else if(n=='N') { png[j*3+0] = 0x20; png[j*3+1] = 0x20; png[j*3+2] = 0x20; }
+                if     (n=='A') { png[j*3+0] = 0xD9 >> mod; png[j*3+1] = 0x16 >> mod; png[j*3+2] = 0x0C >> mod; }
+                else if(n=='G') { png[j*3+0] = 0xAF >> mod; png[j*3+1] = 0xCE >> mod; png[j*3+2] = 0x39 >> mod; }
+                else if(n=='C') { png[j*3+0] = 0xF6 >> mod; png[j*3+1] = 0x8C >> mod; png[j*3+2] = 0x13 >> mod; }
+                else if(n=='T') { png[j*3+0] = 0x16 >> mod; png[j*3+1] = 0x76 >> mod; png[j*3+2] = 0xAE >> mod; }
+                else if(n=='N') { png[j*3+0] = 0x20 >> mod; png[j*3+1] = 0x20 >> mod; png[j*3+2] = 0x20 >> mod; }
                 else            { png[j*3+0] = 0x00; png[j*3+1] = 0x00; png[j*3+2] = 0x00; }
+
                 p++;
+                code[0]=code[1];
+                code[1]=code[2];
             }
             
             printf("%s\n", filename);
